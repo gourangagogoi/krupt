@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model WebhookEvent {
+  id          String    @id @default(cuid())
+  token       String
+  payload     Json
+  headers     Json
+  method      String
+  createdAt   DateTime  @default(now())
+  processed   Boolean   @default(false)
+  processedAt DateTime?
+
+  @@index([token, createdAt])
+}
